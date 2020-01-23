@@ -1,2 +1,2 @@
-# CS-1.2-DATA-STRUCTURES
+# CS-1.2 Intro to Data Structures
  
