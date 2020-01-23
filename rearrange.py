@@ -1,4 +1,7 @@
 import random
+import sys
+
+sentence = sys.argv[1]
 
 
 def rearrange(sentence):
@@ -24,7 +27,7 @@ def reverse_words(sentence):
 
 
 if __name__ == "__main__":
-    sentence = "how now brown cow"
+
     print(rearrange(sentence))
     print(reverse_sentence(sentence))
     print(reverse_words(sentence))
