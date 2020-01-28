@@ -1,5 +1,5 @@
 import sys
-
+import random
 source_text = sys.argv[1]
 
 
@@ -24,7 +24,7 @@ def histogram(source_text):
                 pass
 
             else:
-                word_frequency.update({word: 1})g
+                word_frequency.update({word: 1})
                 pass
 
         else:
@@ -33,5 +33,22 @@ def histogram(source_text):
     return word_frequency
 
 
+def histogram_randomizer(histogram):
+    words = []
+    for word in histogram(source_text):
+        words.append(word)
+    return random.choice(words)
+
+
+def weighted_sampler(histogram):
+    histo = histogram(source_text)
+    weighted_histo = {}
+    total_items = len(histo.values())
+    for key, value in histo.items():
+        value = value / total_items
+        weighted_histo.update({f"{key}": f"{value}"})
+    return weighted_histo
+
+
 if __name__ == "__main__":
-    print(histogram(source_text))
+    print(weighted_sampler(histogram))
