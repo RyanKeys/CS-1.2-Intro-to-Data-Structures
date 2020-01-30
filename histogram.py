@@ -3,12 +3,14 @@ import random
 
 
 def histogram(source_text):
+    '''Takes source text and counts frequency of each word used. Returns Dict()'''
     source_text = open(source_text)
-    source_text = source_text.read().replace("\n", '').split(" ")
+    source_text = source_text.read().replace("\n", " ").split(" ")
     word_frequency = dict()
 
     for word in source_text:
         word = word.lower()
+        # Adds to word if it's already in the dictionary
         if word in word_frequency.keys():
             word_frequency[word] += 1
             pass
@@ -17,11 +19,12 @@ def histogram(source_text):
             pass
 
         elif word not in word_frequency.keys():
+            # Removes periods from word then adds it to dict
             if "." in word:
                 word = word.strip(".")
                 word_frequency.update({word: 1})
                 pass
-
+            # Adds word to dict
             else:
                 word_frequency.update({word: 1})
                 pass
@@ -29,6 +32,12 @@ def histogram(source_text):
         else:
             pass
 
+    return word_frequency
+
+
+def weighted_histogram(source_text):
+    '''Takes source text and returns dict as percentages values'''
+    word_frequency = histogram(source_text)
     weighted_histo = {}
     total_items = len(word_frequency.values())
     for key, value in word_frequency.items():
@@ -37,13 +46,21 @@ def histogram(source_text):
     return weighted_histo
 
 
-def histogram_randomizer(histogram):
+def histogram_randomizer(source_text):
+    '''Randomly creates a sentence from source text'''
     words = []
+    random_sentence = []
     for word in histogram(source_text):
         words.append(word)
-    return random.choice(words)
+        rando_word = random.choice(words)
+        random_sentence.append(rando_word)
+
+    # returns random sentence as a str
+    return ' '.join(random_sentence) + "."
 
 
 if __name__ == "__main__":
     source_text = sys.argv[1]
     print(histogram(source_text))
+    print(weighted_histogram(source_text))
+    print(histogram_randomizer(source_text))
