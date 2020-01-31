@@ -60,6 +60,7 @@ def histogram_randomizer(source_text):
 
 
 def list_histogram(source_text):
+    '''Takes source text and returns frequency of each word used in a list'''
     source_text = open(source_text)
     source_text = source_text.read().replace("\n", " ").split(" ")
     listo = []
@@ -81,9 +82,9 @@ def list_histogram(source_text):
 
 if __name__ == "__main__":
     source_text = sys.argv[1]
-    '''print(histogram(source_text))
+    print(histogram(source_text))
     print(weighted_histogram(source_text))
-    print(histogram_randomizer(source_text))'''
+    print(histogram_randomizer(source_text))
     print(list_histogram(source_text))
     l = list_histogram(source_text)
     print(l[2][1])
