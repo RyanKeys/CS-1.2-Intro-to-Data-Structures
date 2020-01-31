@@ -59,8 +59,31 @@ def histogram_randomizer(source_text):
     return ' '.join(random_sentence) + "."
 
 
+def list_histogram(source_text):
+    source_text = open(source_text)
+    source_text = source_text.read().replace("\n", " ").split(" ")
+    listo = []
+    words = []
+    for word in source_text:
+        if word in listo:
+            count = source_text.count(word)
+            listo.insert(listo.index(word)+1, [word, count])
+            words.append(word)
+            listo.pop(listo.index(word))
+
+        elif word in words:
+            pass
+
+        elif word not in listo:
+            listo.append(word)
+    return listo
+
+
 if __name__ == "__main__":
     source_text = sys.argv[1]
-    print(histogram(source_text))
+    '''print(histogram(source_text))
     print(weighted_histogram(source_text))
-    print(histogram_randomizer(source_text))
+    print(histogram_randomizer(source_text))'''
+    print(list_histogram(source_text))
+    l = list_histogram(source_text)
+    print(l[2][1])
