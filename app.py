@@ -1,10 +1,10 @@
-from flask import Flask
+from flask import Flask, render_template
 from histogram import weighted_histogram
 app = Flask(__name__)
 source_text = "test.txt"
-histo = str(weighted_histogram(source_text))
+histo = weighted_histogram(source_text)
 
 
 @app.route('/')
 def index():
-    return histo
+    return render_template("index.html", histo = histo)
