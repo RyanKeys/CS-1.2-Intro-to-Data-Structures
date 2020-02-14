@@ -1,4 +1,4 @@
-import sys
+import sys      
 import random
 from cleanup import cleanup
 source_text = sys.argv[1]
