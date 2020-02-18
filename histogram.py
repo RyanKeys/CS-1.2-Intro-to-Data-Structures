@@ -40,7 +40,7 @@ class Dictogram:
         return word_frequency
 
 
-    def weighted_histogram(source_text):
+    def weighted_histogram(self, source_text):
         '''Takes source text and returns dict as percentages values'''
         word_frequency = histogram(source_text)
         weighted_histo = {}
@@ -53,7 +53,7 @@ class Dictogram:
         return weighted_histo
 
 
-    def histogram_randomizer(source_text):
+    def histogram_randomizer(self, source_text):
         '''Randomly creates a sentence from source text'''
         words = []
         random_sentence = []
