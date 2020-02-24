@@ -35,9 +35,7 @@ class Dictogram:
     def frequency(self, word):
         '''returns the frequency or count of the given word in the dictionary histogram'''
         #TODO: use your frequency function as a starting point to complete this method
-        print(word)
         dicto = self.dictionary_histogram
-        print(dicto)
         print(dicto.get(word))
         return dicto.get(word)
             
@@ -68,8 +66,7 @@ class Dictogram:
 
         for word in dicto:
             word_list.append(word)
-            num = dicto.get(word)
-            num = num/len(dicto)
+        
 
         first_word = word_list[random.randint(1,len(word_list)-1)]
         second_word = word_list[random.randint(1,len(word_list)-1)]
@@ -77,11 +74,10 @@ class Dictogram:
         second_value = dicto.get(second_word)
 
         if first_value > second_value:
-            return first_value
-            
+            return first_word
 
         elif first_value < second_value:
-            return second_value
+            return second_word
         
         elif first_value == second_value:
             coin_toss = random.choice(word_list)
@@ -113,6 +109,7 @@ def print_dictogram_samples(dictogram):
     # Sample the histogram 10,000 times and count frequency of results
     samples_list = [dictogram.sample() for _ in range(10000)]
     samples_hist = Dictogram(samples_list)
+    print(samples_hist.dictionary_histogram)
     print('samples: {}'.format(samples_hist.dictionary_histogram))
     print()
     print('Sampled frequency and error from observed frequency:')
@@ -132,7 +129,6 @@ def print_dictogram_samples(dictogram):
         observed_freq = count / dictogram.tokens
         # Calculate word's sampled frequency
         samples = samples_hist.frequency(word)
-
         sampled_freq = samples / samples_hist.tokens
         # Calculate error between word's sampled and observed frequency
         error = (sampled_freq - observed_freq) / observed_freq
@@ -144,14 +140,12 @@ def print_dictogram_samples(dictogram):
     print(divider)
     print()
 
+word_list = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish']
 def test():
-    d = Dictogram(['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish'])
-    print(d.build_dictogram())
-    print(d.frequency("fish"))
-    print(d.unique_words())
+    d = Dictogram(word_list)
     print(d.sample())
 
-#print_dictogram(['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish'])
+print_dictogram(word_list)
 
 if __name__ == "__main__":
     test()
