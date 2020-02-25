@@ -1,16 +1,16 @@
 import random
 
-class Dictogram:
+class Dictogram():
 
     def __init__(self, word_list):
         '''Initializes the dictogram properties'''
-
         self.word_list = word_list
        
         self.dictionary_histogram = self.build_dictogram()
-
         self.tokens = sum(self.dictionary_histogram.values())
         self.types = self.unique_words()
+
+        
 
     def build_dictogram(self): 
         '''Creates a histogram dictionary using the word_list property and returns it'''
@@ -61,30 +61,12 @@ class Dictogram:
         '''Randomly samples from the dictionary histogram based on the frequency, returns a word'''
 
         #TODO: use your sample function as a starting point to complete this method
-        word_list = []
-        dicto = self.dictionary_histogram
-
-        for word in dicto:
-            word_list.append(word)
-        
-
-        first_word = word_list[random.randint(1,len(word_list)-1)]
-        second_word = word_list[random.randint(1,len(word_list)-1)]
-        first_value = dicto.get(first_word)
-        second_value = dicto.get(second_word)
-
-        if first_value > second_value:
-            return first_word
-
-        elif first_value < second_value:
-            return second_word
-        
-        elif first_value == second_value:
-            coin_toss = random.choice(word_list)
-            return dicto.get(coin_toss)
-
-
-        
+        selection = random.random()
+        percents = [0]
+        for word, count in self.dictionary_histogram.items():
+            percents.append((count / self.tokens) + percents[-1])
+            if percents[-2] <= selection < percents[-1]:
+                return word
     
 def print_dictogram(word_list):
     '''Creates a dictionary based histogram (dictogram) and then prints out its properties and samples from it'''
@@ -143,7 +125,6 @@ def print_dictogram_samples(dictogram):
 word_list = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish']
 def test():
     d = Dictogram(word_list)
-    print(d.sample())
 
 print_dictogram(word_list)
 
