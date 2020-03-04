@@ -1,60 +1,31 @@
 import random
 
-class Dictogram():
+class Dictogram(dict):
 
-    def __init__(self, word_list):
+    def __init__(self, word_list=None):
         '''Initializes the dictogram properties'''
         self.word_list = word_list
-       
-        self.dictionary_histogram = self.build_dictogram()
-        self.tokens = sum(self.dictionary_histogram.values())
-        self.types = self.unique_words()
+        super(Dictogram, self).__init__()
+        self.types = 0
+        self.tokens = 0
+        if word_list is not None:
+            for word in word_list:
+                self.add_count(word)
 
-        
 
-    def build_dictogram(self): 
-        '''Creates a histogram dictionary using the word_list property and returns it'''
+    def add_count(self, word, count=1):
+        if word in self:
+            self[word] += count
+        else:
+            self[word] = count
+            self.types += 1
+        self.tokens += count 
 
-        #TODO: use your histogram function as a starting point to complete this method
-        word_frequency = {}
-
-        for word in self.word_list:
-            if word in word_frequency.keys():
-                word_frequency[word] += 1
-                pass
-
-            elif word not in word_frequency:
-                word_frequency.update({word: 1})
-
-            else:
-                pass
-        return word_frequency
-
-    
 
     def frequency(self, word):
         '''returns the frequency or count of the given word in the dictionary histogram'''
         #TODO: use your frequency function as a starting point to complete this method
-        dicto = self.dictionary_histogram
-        print(dicto.get(word))
-        return dicto.get(word)
-            
-            
-
-    def unique_words(self):
-        '''returns the number of unique words in the dictionary histogram'''
-        #TODO: use your unique words function as a starting point to complete this method
-        word_list = []
-        dicto = self.dictionary_histogram
-
-        for word in dicto:
-            if word not in word_list:
-                word_list.append(word)
-
-            elif word in word_list:
-                pass
-
-        return len(word_list)
+        return self.get(word,0)
            
 
     def sample(self):
@@ -63,36 +34,32 @@ class Dictogram():
         #TODO: use your sample function as a starting point to complete this method
         selection = random.random()
         percents = [0]
-        for word, count in self.dictionary_histogram.items():
+        for word, count in self.items():
             percents.append((count / self.tokens) + percents[-1])
             if percents[-2] <= selection < percents[-1]:
                 return word
     
-def print_dictogram(word_list):
-    '''Creates a dictionary based histogram (dictogram) and then prints out its properties and samples from it'''
-
+def print_histogram(word_list):
     print()
-    print('Dictionary Histogram:')
+    print('Histogram:')
     print('word list: {}'.format(word_list))
     # Create a dictogram and display its contents
-    dictogram = Dictogram(word_list)
-    print('dictogram: {}'.format(dictogram.dictionary_histogram))
-    print('{} tokens, {} types'.format(dictogram.tokens, dictogram.types))
+    histogram = Dictogram(word_list)
+    print('dictogram: {}'.format(histogram))
+    print('{} tokens, {} types'.format(histogram.tokens, histogram.types))
     for word in word_list[-2:]:
-        freq = dictogram.frequency(word)
+        freq = histogram.frequency(word)
         print('{!r} occurs {} times'.format(word, freq))
     print()
-    print_dictogram_samples(dictogram)
+    print_histogram_samples(histogram)
 
-def print_dictogram_samples(dictogram):
-    '''Compares sampled frequency to observed frequency'''
 
-    print('Dictionary Histogram samples:')
+def print_histogram_samples(histogram):
+    print('Histogram samples:')
     # Sample the histogram 10,000 times and count frequency of results
-    samples_list = [dictogram.sample() for _ in range(10000)]
+    samples_list = [histogram.sample() for _ in range(10000)]
     samples_hist = Dictogram(samples_list)
-    print(samples_hist.dictionary_histogram)
-    print('samples: {}'.format(samples_hist.dictionary_histogram))
+    print('samples: {}'.format(samples_hist))
     print()
     print('Sampled frequency and error from observed frequency:')
     header = '| word type | observed freq | sampled freq  |  error  |'
@@ -106,9 +73,9 @@ def print_dictogram_samples(dictogram):
     red = '\033[31m'
     reset = '\033[m'
     # Check each word in original histogram
-    for word, count in dictogram.dictionary_histogram.items():
+    for word, count in histogram.items():
         # Calculate word's observed frequency
-        observed_freq = count / dictogram.tokens
+        observed_freq = count / histogram.tokens
         # Calculate word's sampled frequency
         samples = samples_hist.frequency(word)
         sampled_freq = samples / samples_hist.tokens
@@ -126,8 +93,9 @@ word_list = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish']
 def test():
     d = Dictogram(word_list)
 
-print_dictogram(word_list)
 
 if __name__ == "__main__":
+    print_histogram(word_list)
+
     test()
     pass

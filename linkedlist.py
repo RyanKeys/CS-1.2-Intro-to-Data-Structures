@@ -56,9 +56,14 @@ class LinkedList(object):
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes and count one for each
-        count = 0
-        for i in self.items():
+        if self.is_empty():
+            return 0
+
+        count = 1
+        node = self.head.next
+        while node is not None:
             count += 1
+            node = node.next
         return count
 
             
@@ -76,6 +81,7 @@ class LinkedList(object):
         else:
             self.tail.next = next_node
             self.tail  = next_node
+            
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -147,10 +153,10 @@ def test_linked_list():
     print('length: {}'.format(ll.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
-        for item in ['B', 'C', 'A']:
+        for item in ['B', 'A', 'C']:
             print('delete({!r})'.format(item))
             ll.delete(item)
             print('list: {}'.format(ll))

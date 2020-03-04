@@ -21,9 +21,8 @@ class MarkovChain:
 
             if current_word in markov_chain.keys(): #already there
                 #get the histogram for that word in the chain
-                histogram = markov_chain[current_word]
+                markov_chain[current_word].frequency(next_word)
                 #add to count
-                histogram.dictionary_histogram[next_word] = histogram.dictionary_histogram.get(next_word, 0) + 1
             else: #first entry
                 markov_chain[current_word] = Dictogram([next_word])
 
@@ -31,14 +30,23 @@ class MarkovChain:
 
     def walk(self, num_words):
         #TODO: generate a sentence num_words long using the markov chain
-        pass
+        start = [self.first_word]
+        for i in range(num_words-1):
+            start.append(self.markov_chain[start[-1]].sample())
+
+        return ' '.join(start)
+
 
     def print_chain(self):
         for word, histogram in self.markov_chain.items():
-            print(word, histogram.dictionary_histogram)
+            print(word, histogram)
 
 
 
 markov_chain = MarkovChain(["one", "fish", "two", "fish", "red", "fish", "blue", "fish"])
+sentence = "You don't understand I coulda had class I coulda been a contender I could've been somebody instead of a bum which is what I am"
+sentence = sentence.split(" ")
+markov2 = MarkovChain(sentence)
 markov_chain.print_chain()
 print(markov_chain.walk(10))
+print(markov2.walk(15))
