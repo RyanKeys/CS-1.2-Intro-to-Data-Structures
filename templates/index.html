@@ -7,11 +7,11 @@
     <title>Tweet Generator</title>
   </head>
   <body>
-    {% if histo %} {% for k, v in histo.items() %}
+    {% if markov %}
     <div style="text-align: center;">
-      <h1>{{ k }}: {{ v }}</h1>
+      <h1>{{ markov.walk(10) }}</h1>
     </div>
-    {% endfor %} {% else %}
+    {% else %}
     <h1>Nothing to Show!</h1>
     {% endif %}
   </body>

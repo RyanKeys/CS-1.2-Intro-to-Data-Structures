@@ -46,7 +46,4 @@ class MarkovChain:
 markov_chain = MarkovChain(["one", "fish", "two", "fish", "red", "fish", "blue", "fish"])
 sentence = "You don't understand I coulda had class I coulda been a contender I could've been somebody instead of a bum which is what I am"
 sentence = sentence.split(" ")
-markov2 = MarkovChain(sentence)
 markov_chain.print_chain()
-print(markov_chain.walk(10))
-print(markov2.walk(15))
