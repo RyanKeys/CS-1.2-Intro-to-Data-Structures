@@ -21,7 +21,7 @@ class MarkovChain:
 
             if current_word in markov_chain.keys(): #already there
                 #get the histogram for that word in the chain
-                markov_chain[current_word].frequency(next_word)
+                markov_chain[current_word].add_count(next_word)
                 #add to count
             else: #first entry
                 markov_chain[current_word] = Dictogram([next_word])
@@ -47,3 +47,4 @@ markov_chain = MarkovChain(["one", "fish", "two", "fish", "red", "fish", "blue",
 sentence = "You don't understand I coulda had class I coulda been a contender I could've been somebody instead of a bum which is what I am"
 sentence = sentence.split(" ")
 markov_chain.print_chain()
+print(markov_chain.walk(10))

@@ -18,14 +18,17 @@ class Dictogram(dict):
             self[word] += count
         else:
             self[word] = count
-            self.types += 1
+        self.types = len(self)
         self.tokens += count 
 
 
     def frequency(self, word):
         '''returns the frequency or count of the given word in the dictionary histogram'''
         #TODO: use your frequency function as a starting point to complete this method
-        return self.get(word,0)
+        if word in self:
+            return self[word]
+        else:
+            return 0
            
 
     def sample(self):
